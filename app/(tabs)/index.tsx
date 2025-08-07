@@ -1,5 +1,5 @@
 import { Text, Button } from 'react-native';
-import { removeToken } from '../utils/auth';
+import { removeToken } from '../../src/utils/auth';
 import { useRouter } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';

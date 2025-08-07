@@ -1,7 +1,7 @@
 import { Slot, useRouter } from 'expo-router';
 import { useState, useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import { isLoggedIn } from '../utils/auth';
+import { isLoggedIn } from '../../src/utils/auth';
 
 export default function RootLayout() {
   const router = useRouter();
