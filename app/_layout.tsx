@@ -5,7 +5,7 @@ import { View, ActivityIndicator } from 'react-native';
 // Mocked auth (replace this with AsyncStorage or Firebase)
 const isUserLoggedIn = async () => {
   // TODO: replace with real logic
-  return false; // 👈 change to true to simulate being logged in
+  return true; // 👈 change to true to simulate being logged in
 };
 
 export default function RootLayout() {
