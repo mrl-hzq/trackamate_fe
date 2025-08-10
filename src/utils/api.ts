@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// const API_BASE = '192.168.5.184:5000';
+// const API_BASE = 'http://192.168.100.108:5000';
 const API_BASE = 'http://127.0.0.1:5000';
 
 export const registerUser = async (data: {
