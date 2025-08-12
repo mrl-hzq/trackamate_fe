@@ -37,9 +37,9 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
         <TouchableOpacity onPress={() => router.push('/food')}>
           <Ionicons name="fast-food" size={24} color="#94a3b8" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push('/health')}>
+        {/* <TouchableOpacity onPress={() => router.push('/health')}>
           <Ionicons name="fitness" size={24} color="#94a3b8" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
