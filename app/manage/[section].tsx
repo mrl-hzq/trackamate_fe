@@ -282,9 +282,53 @@ const burnStats = getBurnStats();
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Investment start
+
+const MONTHLY_INVEST = 1000; // hardcoded budget
+const [itemNameInvest, setItemNameInvest] = useState('');
+const [amountInvest, setAmountInvest] = useState('');
+type Investment = {
+  id: string;
+  name: string;
+  amount: number;
+  isDone: boolean;
+};
+const [Investments, setInvestments] = useState<Investment[]>([
+  { id: '1', name: 'Mutual Fund', amount: 300, isDone: true },
+  { id: '2', name: 'Crypto DCA', amount: 200, isDone: false },
+  { id: '3', name: 'Stock Purchase', amount: 500, isDone: false },
+]);
+
+const handleAddInvest = () => {
+  if (!itemNameInvest.trim() || !amountInvest.trim()) return;
+
+  const newInvestment: Investment = {
+    id: Date.now().toString(),
+    name: itemNameInvest,
+    amount: parseFloat(amountInvest),
+    isDone: false,
+  };
+
+  setInvestments(prev => [...prev, newInvestment]);
+  setItemNameInvest('');
+  setAmountInvest('');
+};
+
+const toggleIsDoneInvest = (id: string) => {
+  setInvestments(prev =>
+    prev.map(item =>
+      item.id === id ? { ...item, isDone: !item.isDone } : item
+    )
+  );
+};
+
+//Investment END
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Commitment start
 
-const MONTHLY_INVESTMENT = 1000; // hardcoded budget
+const MONTHLY_COMMIT = 1000; // hardcoded budget
 const [itemNameCommit, setItemNameCommit] = useState('');
 const [amountCommit, setAmountCommit] = useState('');
 const [recurringCommit, setRecurringCommit] = useState(false);
@@ -413,7 +457,7 @@ const renderForm = () => {
                 value={descriptionFood}
                 onChangeText={setDescriptionFood}
               />
-              <TouchableOpacity style={styles.addButton} onPress={handleAddFood}>
+              <TouchableOpacity style={styles.addButtonTop} onPress={handleAddFood}>
                 <Text style={styles.addButtonText}>Add</Text>
               </TouchableOpacity>
             </View>
@@ -521,7 +565,7 @@ const renderForm = () => {
                 value={descriptionBurn}
                 onChangeText={setDescriptionBurn}
               />
-              <TouchableOpacity style={styles.addButton} onPress={handleAddBurn}>
+              <TouchableOpacity style={styles.addButtonTop} onPress={handleAddBurn}>
                 <Text style={styles.addButtonText}>Add</Text>
               </TouchableOpacity>
             </View>
@@ -544,10 +588,64 @@ const renderForm = () => {
         </>
       );
       case 'investments':
+        return (
+            <View>
+              <Text style={styles.budget}>Monthly Investment Budget: RM {MONTHLY_INVEST}</Text>
+
+              {/* Input Fields */}
+              <Text style={styles.label}>Investment Name</Text>
+              <TextInput
+                style={styles.input}
+                value={itemNameInvest}
+                onChangeText={setItemNameInvest}
+                placeholder="Enter name"
+                placeholderTextColor="#94a3b8"
+              />
+
+              <Text style={styles.label}>Amount (RM)</Text>
+              <TextInput
+                style={styles.input}
+                keyboardType="numeric"
+                value={amountInvest}
+                onChangeText={setAmountInvest}
+                placeholder="Enter amount"
+                placeholderTextColor="#94a3b8"
+              />
+
+              <TouchableOpacity style={styles.addButtonTop} onPress={handleAddInvest}>
+                <Text style={styles.addButtonText}>Add Investment</Text>
+              </TouchableOpacity>
+
+              {/* List of Commitments */}
+              <FlatList
+                style={{ marginTop: 20 }}
+                data={Investments}
+                keyExtractor={item => item.id}
+                renderItem={({ item }) => (
+                  <View
+                    style={[
+                      styles.commitmentRow,
+                      !item.isDone && { backgroundColor: 'rgba(239,68,68,0.2)' }
+                    ]}
+                  >
+                    <View>
+                      <Text style={styles.commitmentName}>{item.name}</Text>
+                      <Text style={styles.commitmentAmount}>RM {item.amount}</Text>
+                    </View>
+                    <Switch
+                      value={item.isDone}
+                      onValueChange={() => toggleIsDoneInvest(item.id)}
+                      trackColor={{ false: '#64748b', true: '#22c55e' }}
+                    />
+                  </View>
+                )}
+              />
+            </View>
+        );
       case 'commitments':
         return (
-            <View style={styles.container}>
-              <Text style={styles.budget}>Monthly Investment Budget: RM {MONTHLY_INVESTMENT}</Text>
+            <View>
+              <Text style={styles.budget}>Monthly Commitment Budget: RM {MONTHLY_COMMIT}</Text>
 
               {/* Input Fields */}
               <Text style={styles.label}>Commitment Name</Text>
@@ -687,7 +785,8 @@ const styles = StyleSheet.create({
   emptyBox: { backgroundColor: 'transparent', borderWidth: 0 },
   inputContainer: { marginTop: 12 },
   inputLabel: { color: '#fff', marginBottom: 4 },
-  addButton: { backgroundColor: '#82ca9d', padding: 10, borderRadius: 6, alignItems: 'center' },
+  addButton: { backgroundColor: '#82ca9d', padding: 10, borderRadius: 6, alignItems: 'center'},
+  addButtonTop: { backgroundColor: '#82ca9d', padding: 10, borderRadius: 6, alignItems: 'center', marginTop: 15},
   addButtonText: { color: '#000', fontWeight: 'bold' },
   expenseRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 6, borderBottomWidth: 1, borderBottomColor: '#475569' },
   expenseDate: { color: '#94a3b8', width: 50 },
