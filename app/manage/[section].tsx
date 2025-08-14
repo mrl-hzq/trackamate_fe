@@ -460,23 +460,23 @@ const renderForm = () => {
               <TouchableOpacity style={styles.addButtonTop} onPress={handleAddFood}>
                 <Text style={styles.addButtonText}>Add</Text>
               </TouchableOpacity>
+              
+              <Text style={[styles.label, { marginTop: 20 }]}>Spending List</Text>
+              <FlatList
+                data={expensesFood}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={({ item }) => (
+                  <View style={styles.expenseRow}>
+                    <Text style={styles.expenseDate}>{dayjs(item.date).format('DD/MM')}</Text>
+                    <Text style={[styles.expenseAmount, { color: item.amount > 10 ? '#ef4444' : '#22c55e' }]}>
+                      RM {item.amount.toFixed(2)}
+                    </Text>
+                    <Text style={styles.expenseDesc}>{item.descriptionFood}</Text>
+                  </View>
+                )}
+              />
             </View>
           )}
-
-          <Text style={[styles.label, { marginTop: 20 }]}>Spending List</Text>
-          <FlatList
-            data={expensesFood}
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.expenseRow}>
-                <Text style={styles.expenseDate}>{dayjs(item.date).format('DD/MM')}</Text>
-                <Text style={[styles.expenseAmount, { color: item.amount > 10 ? '#ef4444' : '#22c55e' }]}>
-                  RM {item.amount.toFixed(2)}
-                </Text>
-                <Text style={styles.expenseDesc}>{item.descriptionFood}</Text>
-              </View>
-            )}
-          />
         </>
       );
 
@@ -568,23 +568,23 @@ const renderForm = () => {
               <TouchableOpacity style={styles.addButtonTop} onPress={handleAddBurn}>
                 <Text style={styles.addButtonText}>Add</Text>
               </TouchableOpacity>
+
+              <Text style={[styles.label, { marginTop: 20 }]}>Spending List</Text>
+              <FlatList
+                data={expensesBurn}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={({ item }) => (
+                  <View style={styles.expenseRow}>
+                    <Text style={styles.expenseDate}>{dayjs(item.date).format('DD/MM')}</Text>
+                    <Text style={[styles.expenseAmount, { color: item.amount > 10 ? '#ef4444' : '#22c55e' }]}>
+                      RM {item.amount.toFixed(2)}
+                    </Text>
+                    <Text style={styles.expenseDesc}>{item.descriptionBurn}</Text>
+                  </View>
+                )}
+              />
             </View>
           )}
-
-          <Text style={[styles.label, { marginTop: 20 }]}>Spending List</Text>
-          <FlatList
-            data={expensesBurn}
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.expenseRow}>
-                <Text style={styles.expenseDate}>{dayjs(item.date).format('DD/MM')}</Text>
-                <Text style={[styles.expenseAmount, { color: item.amount > 10 ? '#ef4444' : '#22c55e' }]}>
-                  RM {item.amount.toFixed(2)}
-                </Text>
-                <Text style={styles.expenseDesc}>{item.descriptionBurn}</Text>
-              </View>
-            )}
-          />
         </>
       );
       case 'investments':
